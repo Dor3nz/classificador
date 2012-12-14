@@ -39,6 +39,7 @@ LlistaEntrenament = FitxersEntrenament(1).name;
 for i = 2:length(FitxersEntrenament)
     LlistaEntrenament = vertcat(LlistaEntrenament, FitxersEntrenament(i).name);
 end
+LlistaEntrenament = mat2cell(LlistaEntrenament);
 
 % Omple el desplegable dels Fitxers d' Entrenament amb els seus noms
 set(handles.popup_entrenament,'string',LlistaEntrenament);
@@ -51,7 +52,7 @@ LlistaProva = FitxersProva(1).name;
 for i = 2:length(FitxersProva)
     LlistaProva = vertcat(LlistaProva, FitxersProva(i).name);
 end
-
+LlistaProva = mat2cell(LlistaProva);
 % Omple el desplegable dels Fitxers de Prova amb els seus noms
 set(handles.popup_prova,'string',LlistaProva);
 
@@ -96,9 +97,8 @@ end
 
 % --- Executes on button press in push_entrena.
 function push_entrena_Callback(hObject, eventdata, handles)
-
-
+str = getCurrentPopupString(handles.popup_entrenament);
 
 % --- Executes on button press in push_classifica.
 function push_classifica_Callback(hObject, eventdata, handles)
-
+str = getCurrentPopupString(handles.popup_prova);
