@@ -33,15 +33,15 @@ guidata(hObject, handles);
 
 % Llegeix fitxers .txt del directori de train
 FitxersEntrenament = dir([pwd '/train/*.txt']);
-LlistaEntrenament = FitxersEntrenament(1).name;
+LlistaEnt = FitxersProva(1).name;
 
 % Omple el vector vertical amb els noms dels fitxers
-for i = 2:length(FitxersEntrenament)
-    LlistaEntrenament = vertcat(LlistaEntrenament, FitxersEntrenament(i).name);
+for i = 2:length(FitxersProva)
+    LlistaProva = vertcat(LlistaProva, FitxersProva(i).name);
 end
 
 % Omple el desplegable dels Fitxers d' Entrenament amb els seus noms
-set(handles.popup_entrenament,'string',LlistaEntrenament);
+set(handles.popup_prova,'string',LlistaProva);
 
 % Llegeix fitxers .txt del directori de train
 FitxersProva = dir([pwd '/test/*.txt']);
