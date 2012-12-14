@@ -38,6 +38,15 @@ guidata(hObject, handles);
 % UIWAIT makes init wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+% Omple el desplegable dels Fitxers de Prova
+FitxersProva = dir([pwd '/test/*.txt']);
+LlistaProva = FitxersProva(1).name;
+
+for i = 2:length(FitxersProva)
+    LlistaProva = vertcat(LlistaProva, FitxersProva(i).name);
+end
+set(handles.popup_prova,'string',LlistaProva);
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = init_OutputFcn(hObject, eventdata, handles) 
@@ -68,6 +77,8 @@ function popup_entrenament_CreateFcn(hObject, eventdata, handles)
 
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
+
+
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -88,6 +99,10 @@ function popup_prova_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to popup_prova (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+handles.popup_test=hObject;  %pass handles the popup menu object
+guidata(hObject, handles);
+
 
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
