@@ -70,7 +70,8 @@ function popup_entrenament_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function popup_entrenament_CreateFcn(hObject, eventdata, handles)
 
-
+handles.popup_entrenament = hObject;
+guidata(hObject, handles);
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
@@ -85,11 +86,8 @@ function popup_prova_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function popup_prova_CreateFcn(hObject, eventdata, handles)
 
-
-handles.popup_test=hObject;  %pass handles the popup menu object
+handles.popup_prova = hObject;
 guidata(hObject, handles);
-
-
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
