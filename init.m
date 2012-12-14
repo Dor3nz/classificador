@@ -97,8 +97,20 @@ end
 
 % --- Executes on button press in push_entrena.
 function push_entrena_Callback(hObject, eventdata, handles)
-str = getCurrentPopupString(handles.popup_entrenament);
+
+%Llegeix el contingut del desplegable d'entrenament 
+file = getCurrentPopupString(handles.popup_entrenament);
+
+%Guarda l'arxiu seleccionat en una variable
+o_file = fopen(['train/' file]);
+
+
 
 % --- Executes on button press in push_classifica.
 function push_classifica_Callback(hObject, eventdata, handles)
-str = getCurrentPopupString(handles.popup_prova);
+
+%Llegeix el contingut del desplegable d'entrenament 
+file = getCurrentPopupString(handles.popup_prova);
+
+%Guarda l'arxiu seleccionat en una variable
+o_file = fopen(['train/' file]);
