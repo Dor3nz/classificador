@@ -1,11 +1,11 @@
 %% CLASSIFICADOR DE IMATGES NATURE/CITY
 %  Aleix Casanovas, Sergi Alonso, Marc Andrés i Genís Matutes
 
-
 function classificador(file)
 
 %% GUARDA LES IMATGES
 num = 10;
+file = fopen([file '.txt']);
 
 for i = 0:(num-1)
     fila = fgetl(file);
@@ -15,14 +15,17 @@ for i = 0:(num-1)
 end
 
 %% CÀLCUL DE VERD
+% Guarda els nivells de verd de les imatges en un vector.
 
-ver = zeros(1,num);
+% El vector nivells_verd conté el nivell de verd de les imatges
+% consecutives.
+nivells_verd = zeros(1,num);
 probabilitat = zeros(1,num);
 
 for i = 1:num
     
     [green,prob] = verd(I(:,:,:,i));
-    ver(i) = green;
+    nivells_verd(i) = green;
     probabilitat(i) = prob;
     
     if(probabilitat(i)>0.35)
@@ -37,7 +40,7 @@ else
 end
 
 %% DETECCIÓ DE CONTORNS
-%TRANSFORMADA DE HOUGH
+% TRANSFORMADA DE HOUGH
 
 numhoritzontal = zeros(1,10);
 numvertical = zeros(1,10);
@@ -50,17 +53,18 @@ for i = 1:num
     disp(strcat(grup,'-',num2str(i-1),' Lines verticals: ',num2str(numver)));
     
     if((numhor+numver) > 5)
-        cont(i) = cont(i) - 2;
-        
+        cont(i) = cont(i) - 2;        
     elseif((numhor+numver) <= 5)
-        cont(i) = cont(i) + 2;
-        
-    end
-    
+        cont(i) = cont(i) + 2;        
+    end    
 end
 
 
 %% EVALUACIÓ DELS RESULTATS
+% Extreure en una funció que ha de:
+%        - Escriure fitxer de sortida
+%        - Retornar el nom del fitxer de sortida perquè 
+%            el pugui llegir l'evaluador
 
 fid=fopen(strcat(grup,'out.txt'),'w');
 
