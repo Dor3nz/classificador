@@ -2,17 +2,33 @@
 %  Aleix Casanovas, Sergi Alonso, Marc Andrés i Genís Matutes
 
 
-function classificador(file)
+function classifica = classifica(file)
+%% CÀLCUL DELS VALORS RGB DE LA IMATGE
 
-%% GUARDA LES IMATGES
-num = 10;
+global num = 10;
+
+
 
 for i = 0:(num-1)
     fila = fgetl(file);
     nom_imatge = fila(1:4);
-    imatge = imread(nom_imatge,'jpg');
+%     imatge = imread(arxiu,'jpg');
     I(:,:,:,(i+1)) = imatge;
 end
+
+s = size(I);
+
+
+for i = 1:num
+
+RGB_r(:,:,i) = I(:,:,1,i);
+RGB_g(:,:,i) = I(:,:,2,i);       
+RGB_b(:,:,i) = I(:,:,3,i);
+
+end
+
+
+
 
 %% CÀLCUL DE VERD
 
