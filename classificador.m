@@ -5,10 +5,10 @@ function classificador(file)
 
 %% GUARDA LES IMATGES
 num = 10;
-file = fopen([file '.txt']);
+fitxer = fopen([file '.txt']);
 
 for i = 0:(num-1)
-    fila = fgetl(file);
+    fila = fgetl(fitxer);
     nom_imatge = fila(1:4);
     imatge = imread(nom_imatge,'jpg');
     I(:,:,:,(i+1)) = imatge;
@@ -42,6 +42,8 @@ end
 %% DETECCIÓ DE CONTORNS
 % TRANSFORMADA DE HOUGH
 
+% Vectors on es guarda el nombre de línies horitzontal i vertical de 
+% cada imatge.
 numhoritzontal = zeros(1,10);
 numvertical = zeros(1,10);
 
@@ -64,9 +66,9 @@ end
 % Extreure en una funció que ha de:
 %        - Escriure fitxer de sortida
 %        - Retornar el nom del fitxer de sortida perquè 
-%            el pugui llegir l'evaluador
+%          el pugui llegir l'evaluador
 
-fid=fopen(strcat(grup,'out.txt'),'w');
+fid = fopen(strcat(file,'out.txt'),'w');
 
 for i = 1:num
     if(cont(i) < 0)
