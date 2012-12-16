@@ -1,4 +1,4 @@
-
+function [mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train
 numgrups = 0;
 
 dades_tots_grups = zeros(10,6,2);
@@ -260,4 +260,3 @@ matrius(grup);
 
 sortir = input('Desitja sortir?(s --> si | n --> no) ','s');
 end
-        
