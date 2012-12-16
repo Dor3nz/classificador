@@ -240,5 +240,21 @@ K_linies = (mitjana_linia_natura + mitjana_linia_ciutat)/2;
 grup = input('Quin grup imatges vols classificar? ','s');
 
 classificador(grup,K_verd,K_linies);
-        
+
+%precissio i record()
+%matrius de confusio()
+
+disp('Desitja posar uns llindars diferents?');
+sortir = 'n';
+while(sortir~='s')
+    
+K2_verd = input('Llindar de tant per cent de verd: ');
+K2_linies = input('Llindar del nombre de linies: ');
+
+classificador(grup,K2_verd,K2_linies);
+%precissio i record()
+%matrius de confusio
+
+sortir = input('Desitja sortir? ','s');
+end
         
