@@ -19,12 +19,12 @@ numgrups = numgrups + 1;
 
 grup = zeros(1,numgrups);
 
-grup1 = input('Primer grup ','s');
-grup2 = input('Segon grup ','s');
-grup3 = input('Tercer grup ','s');
-grup4 = input('Quart grup ','s');
-grup5 = input('Cinquè grup ','s');
-grup6 = input('Sisè grup ','s');
+grup1 = input('primer grup ','s');
+grup2 = input('segon grup ','s');
+grup3 = input('tercer grup ','s');
+grup4 = input('4 grup ','s');
+grup5 = input('5 grup ','s');
+grup6 = input('6 grup ','s');
 
 fid1 = fopen(strcat(grup1,'.txt'));
 fid2 = fopen(strcat(grup2,'.txt'));
@@ -239,6 +239,6 @@ K_linies = (mitjana_linia_natura + mitjana_linia_ciutat)/2;
 
 grup = input('Quin grup imatges vols classificar? ','s');
 
-classificador(grup,K_verd,K_linies);
+classificador(grup);
         
         
