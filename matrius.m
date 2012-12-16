@@ -42,4 +42,12 @@ for q = 1:num
         negatius_certs = negatius_certs + 1;
     end
 end
+
+f = figure('Position', [100 100 752 350]);
+t = uitable('Parent', f, 'Position', [25 25 700 200]);
+
+complexData = { ...
+    'Positius predicció' positius_certs negatius_falsos; ...
+    'Negatius predicció' positius_falsos negatius_certs;};
+set(t, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
         
