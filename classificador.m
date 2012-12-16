@@ -1,21 +1,19 @@
 %% CLASSIFICADOR DE IMATGES NATURE/CITY
-%  Aleix Casanovas, Sergi Alonso, Marc Andrés i Genís Matutes
+%  Aleix Casanovas, Sergi Alonso, Marc Andrï¿½s i Genï¿½s Matutes
 
 function classificador(file, llindar_verd, llindar_linies)
 
 %% GUARDA LES IMATGES
 
-% Nom del fitxer HARDCODED a falta de interfície ara mateix
-
-% El vector cont es fa servir per determinar si la imatge és natura o
-% o ciutat en funció de si el valor de cada índex, aquest referint-se a la
-% imatge, és positiu o negatiu respectivament.
+% El vector cont es fa servir per determinar si la imatge ï¿½s natura o
+% o ciutat en funciï¿½ de si el valor de cada ï¿½ndex, aquest referint-se a la
+% imatge, ï¿½s positiu o negatiu respectivament.
 cont = zeros(1,10);
 
 % Nombre d'imatges a classificar.
 num = 10;
 
-% Obre el fitxer enviat desde la interfície.
+% Obre el fitxer enviat desde la interfï¿½cie.
 fitxer = fopen([file '.txt'])
 
 % Lectura de les imatges i posterior emmagatzematge d'aquestes a I.
@@ -26,17 +24,17 @@ for i = 0:(num-1)
     I(:,:,:,(i+1)) = imatge;
 end
 
-%% CÀLCUL DE VERD
+%% Cï¿½LCUL DE VERD
 % Guarda els nivells de verd de les imatges en un vector.
 
-% El vector nivells_verd conté el nivell de verd de les imatges
+% El vector nivells_verd contï¿½ el nivell de verd de les imatges
 % consecutives.
 nivells_verd = zeros(1,num);
 probabilitat = zeros(1,num);
 
 for i = 1:num
     
-    % Càlcul del nivell de verd de la imatge.
+    % Cï¿½lcul del nivell de verd de la imatge.
     [green,prob] = verd(I(:,:,:,i));
     nivells_verd(i) = green;
     probabilitat(i) = prob;
@@ -49,21 +47,21 @@ for i = 1:num
     end
 end
 
-%% DETECCIÓ DE CONTORNS
+%% DETECCIï¿½ DE CONTORNS
 % TRANSFORMADA DE HOUGH
 
-% Vectors on es guarda el nombre de línies horitzontal i vertical de 
+% Vectors on es guarda el nombre de lï¿½nies horitzontal i vertical de 
 % cada imatge.
 numhoritzontal = zeros(1,10);
 numvertical = zeros(1,10);
 
 for i = 1:num
-    % Càlcul de les línies horitzontals i verticals de la imatge.
+    % Cï¿½lcul de les lï¿½nies horitzontals i verticals de la imatge.
     [numhor,numver] = detect(I(:,:,:,i));
     numhoritzontal(i) = numhor;
     numvertical(i) = numver;
 
-    % Si es supera el llindar de línies restem 2(ciutat), en cas contrari 
+    % Si es supera el llindar de lï¿½nies restem 2(ciutat), en cas contrari 
     % sumem 2(rural).
     if((numhor+numver) > llindar_linies)
         cont(i) = cont(i) - 2;        
@@ -73,7 +71,7 @@ for i = 1:num
 end
 
 
-%% EVALUACIÓ DELS RESULTATS
+%% EVALUACIï¿½ DELS RESULTATS
 % Treu el fitxer de sortida
 
 fid = fopen(strcat(file,'out.txt'),'w');
