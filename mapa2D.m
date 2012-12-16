@@ -1,5 +1,5 @@
 
-
+%yeyeye
 numgrups = 0;
 
 dades_tots_grups = zeros(10,6,2);
