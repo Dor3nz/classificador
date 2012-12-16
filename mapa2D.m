@@ -193,64 +193,40 @@ for i = 1:10
         
 end
 
+% calculs finals
+
 total_verd_natura = zeros(1,6);
 total_verd_ciutat = zeros(1,6);
 
-for i = 1:10
-    if ( valors(1,i) == 1)
-        total_verd_natura(1) = sum(dades_tots_grups(i,1,1));
-    elseif ( valors(1,i) == 0)
-        total_verd_ciutat(1) = sum(dades_tots_grups(i,1,1));
+total_linia_natura = zeros(1,6);
+total_linia_ciutat = zeros(1,6);
+   
+
+for j = 1:6
+    cont=0;
+    for i = 1:10
+        if ( valors(1,i) == 1)
+        cont=cont+1;
+        end
     end
-end
-
-for i = 1:10
-    if ( valors(2,i) == 1)
-        total_verd_natura(2) = sum(dades_tots_grups(i,2,1));
-    elseif ( valors(2,i) == 0)
-        total_verd_ciutat(2) =  sum(dades_tots_grups(i,2,1));
-    end
-end
-
-for i = 1:10
-    if ( valors(3,i) == 1)
-        total_verd_natura(3) = sum(dades_tots_grups(i,3,1));
-    elseif ( valors(3,i) == 0)
-        total_verd_ciutat(3) = sum(dades_tots_grups(i,3,1));
-    end
-end
-
-for i = 1:10
-    if ( valors(4,i) == 1)
-        total_verd_natura(4) = sum(dades_tots_grups(i,4,1));
-    elseif( valors(4,i) == 0)
-        total_verd_ciutat(4) = sum(dades_tots_grups(i,4,1));
-    end
-end
-
-for i = 1:10
-    if ( valors(5,i) == 1)
-        total_verd_natura(5) = sum(dades_tots_grups(i,5,1));
-    elseif ( valors(5,i) == 0)
-        total_verd_ciutat(5) = sum(dades_tots_grups(i,5,1));
-    end
-end
-
-for i = 1:10
-    if ( valors(6,i) == 1)
-        total_verd_natura(6) = sum(dades_tots_grups(i,6,1));
-    elseif ( valors(6,i) == 0)
-        total_verd_ciutat(6) = sum(dades_tots_grups(i,6,1));
-    end
-end
+   
+	for i = 1:10
+    		if ( valors(j,i) == 1)
+        		total_verd_natura(j) =total_verd_natura(j)+ dades_tots_grups(i,j,1)/cont;
+			total_linia_natura(j) =total_linia_natura(j)+ dades_tots_grups(i,j,2)/cont;
+    		elseif ( valors(j,i) == 0)
+        		total_verd_ciutat(j) =total_verd_ciutat(j)+ dades_tots_grups(i,j,1)/(10-cont);
+			total_linia_ciutat(j) =total_linia_ciutat(j)+dades_tots_grups(i,j,2)/(10-cont);
+    		end
+	end 
+end       
 
 
-    mitjana_verd_natura = sum(total_verd_natura(:))/10;
-    mitjana_verd_ciutat = sum(total_verd_ciutat(:))/10;
-        
-        
-        
-        
+    mitjana_verd_natura = sum(total_verd_natura(:))/6;
+    mitjana_verd_ciutat = sum(total_verd_ciutat(:))/6;
+
+    mitjana_linia_natura = sum(total_linia_natura(:))/6;
+    mitjana_linia_ciutat = sum(total_linia_ciutat(:))/6;           
         
         
         
