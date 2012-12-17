@@ -166,11 +166,18 @@ y_precisio_plot = [y_precisio 0];
 plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
                 'MarkerEdgeColor','k',...
                 'MarkerFaceColor','k',...
-                'MarkerSize',3); 
-title 'gràfic precissió/record'; 
+                'MarkerSize',3);  
 xlabel 'record';ylabel 'precissió';
 
 % Dibuixa la matriu de confusió.
+[positius_certs, negatius_falsos, positius_falsos, negatius_certs] = matrius(grup, num);
+
+complexData = { ...
+    'Positius predicció' positius_certs negatius_falsos; ...
+    'Negatius predicció' positius_falsos negatius_certs;};
+set(handles.conf_matrix, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
+
+% Posa disponible la visualització dels resultats erronis.
 
 
 % --- Executes on selection change in popupmenu3.
