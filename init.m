@@ -32,16 +32,6 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % Llegeix fitxers .txt del directori de train
-FitxersEntrenament = dir([pwd '/train/*.txt']);
-LlistaEntrenament = FitxersEntrenament(1).name;
-
-% Omple el vector vertical amb els noms dels fitxers
-for i = 2:length(FitxersEntrenament)
-    LlistaEntrenament = vertcat(LlistaEntrenament, FitxersEntrenament(i).name);
-end
-LlistaEntrenament = mat2cell(LlistaEntrenament);
-
-% Llegeix fitxers .txt del directori de train
 FitxersProva = dir([pwd '/test/*.txt']);
 LlistaProva = FitxersProva(1).name;
 
@@ -53,6 +43,23 @@ LlistaProva = mat2cell(LlistaProva);
 % Omple el desplegable dels Fitxers de Prova amb els seus noms
 set(handles.popup_prova,'string',LlistaProva);
 
+% Emplena el desplegable de N imatges a llegir en funció del nombre de
+% línies que hi ha a l'arxiu seleccionat.
+fid = fopen(['test/' getCurrentPopupString(handles.popup_prova)]);
+
+nLinies = 0;
+while (fgets(fid) ~= -1),
+  nLinies = nLinies+1;
+end
+fclose(fid);
+
+% Creació i assignació del String del desplegable.
+n_imatges = 1;
+for i = 2:nLinies
+    n_imatges = vertcat(n_imatges, i);
+end
+set(handles.n_imatges_popup, 'String', n_imatges);
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = init_OutputFcn(hObject, eventdata, handles) 
@@ -63,6 +70,21 @@ varargout{1} = handles.output;
 % --- Executes on selection change in popup_prova.
 function popup_prova_Callback(hObject, eventdata, handles)
 
+% Llegeix i compta les línies del fitxer seleccionat.
+fid = fopen(['test/' getCurrentPopupString(handles.popup_prova)]);
+
+nLinies = 0;
+while (fgets(fid) ~= -1),
+  nLinies = nLinies+1;
+end
+fclose(fid);
+
+% Creació i assignació del String del desplegable.
+n_imatges = 1;
+for i = 2:nLinies
+    n_imatges = vertcat(n_imatges, i);
+end
+set(handles.n_imatges_popup, 'String', n_imatges);
 
 % --- Executes during object creation, after setting all properties.
 function popup_prova_CreateFcn(hObject, eventdata, handles)
@@ -119,13 +141,13 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in popupmenu4.
-function popupmenu4_Callback(hObject, eventdata, handles)
+% --- Executes on selection change in n_imatges_popup.
+function n_imatges_popup_Callback(hObject, eventdata, handles)
 
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu4_CreateFcn(hObject, eventdata, handles)
+function n_imatges_popup_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
