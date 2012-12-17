@@ -1,19 +1,20 @@
 function [mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train
 
-ngrups = 6;
-
-% L'estrucutra dades_tots_grups conté els valors de verd i número de
-% línines de les imatges d'entrenament de tots els grups.
-global dades_tots_grups;
-global valors;
 dades_tots_grups = zeros(10,6,2);
 
-fid1 = fopen('train/11.txt');
-fid2 = fopen('train/12.txt');
-fid3 = fopen('train/21.txt');
-fid4 = fopen('train/22.txt');
-fid5 = fopen('train/31.txt');
-fid6 = fopen('train/32.txt');
+grup1 = '11';
+grup2 = '12';
+grup3 = '21';
+grup4 = '22';
+grup5 = '31';
+grup6 = '32';
+
+fid1 = fopen(['train/' grup1 '.txt']);
+fid2 = fopen(['train/' grup2 '.txt']);
+fid3 = fopen(['train/' grup3 '.txt']);
+fid4 = fopen(['train/' grup4 '.txt']);
+fid5 = fopen(['train/' grup5 '.txt']);
+fid6 = fopen(['train/' grup6 '.txt']);
 
 valor_da1 = fscanf(fid1,'%s');
 valor_da2 = fscanf(fid2,'%s');
@@ -29,53 +30,147 @@ s4 = size(valor_da4);
 s5 = size(valor_da5);
 s6 = size(valor_da6);
 
-function assigna_valors(s, valor_da)
-    i = 1;
-    for k = 5:5:s
-        valors(2,i) = str2num(valor_da(k));
-        i = i + 1;
-    end
+
+
+i = 1;
+for k = 5:5:s1(2)
+    valors(1,i) = str2num(valor_da1(k));
+    i=i+1;
 end
 
-assigna_valors(s1, valor_da1);
-assigna_valors(s2, valor_da2);
-assigna_valors(s3, valor_da3);
-assigna_valors(s4, valor_da4);
-assigna_valors(s5, valor_da5);
-assigna_valors(s6, valor_da6);
-
-function I = lectura_imatge(grup)
-    for i = 0:9
-        arxiu = strcat(grup, '-', num2str(i));
-        im = imread(['train/' arxiu], 'jpg');
-        I(:,:,:,(i+1)) = im;
-    end
+i = 1;
+for k = 5:5:s2(2)
+    valors(2,i) = str2num(valor_da2(k));
+    i=i+1;
+end
+    
+i = 1;
+for k = 5:5:s3(2)
+    valors(3,i) = str2num(valor_da3(k));
+    i=i+1;
 end
 
-I1 = lectura_imatge('11');
-I2 = lectura_imatge('12');
-I3 = lectura_imatge('21');
-I4 = lectura_imatge('22');
-I5 = lectura_imatge('31');
-I6 = lectura_imatge('32');
-
-function llindars(I, ngrup)
-    for i = 1:10
-        [green,prob] = verd(I(:,:,:,i));
-        dades_tots_grups(i,ngrup,1) = prob;
-
-        [numhor,numver] = detect(I(:,:,:,i));
-        dades_tots_grups(i,ngrup,2)= numhor + numver;
-    end      
+i = 1;
+for k = 5:5:s4(2)
+    valors(4,i) = str2num(valor_da4(k));
+    i=i+1;
+end
+i = 1;
+for k = 5:5:s5(2)
+    valors(5,i) = str2num(valor_da5(k));
+    i=i+1;
 end
 
-llindars(I1, 1);
-llindars(I2, 2);
-llindars(I3, 3);
-llindars(I4, 4);
-llindars(I5, 5);
-llindars(I6, 6);
+i = 1;
+for k = 5:5:s6(2)
+    valors(6,i) = str2num(valor_da6(k));
+    i=i+1;
+end
 
+
+for i = 0:9
+    arxiu = strcat(grup1,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I1(:,:,:,(i+1)) = im;
+
+end
+
+for i = 0:9
+    arxiu = strcat(grup2,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I2(:,:,:,(i+1)) = im;
+
+end
+
+for i = 0:9
+    arxiu = strcat(grup3,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I3(:,:,:,(i+1)) = im;
+
+end
+
+for i = 0:9
+    arxiu = strcat(grup4,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I4(:,:,:,(i+1)) = im;
+
+end
+
+for i = 0:9
+    arxiu = strcat(grup5,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I5(:,:,:,(i+1)) = im;
+
+end
+
+for i = 0:9
+    arxiu = strcat(grup6,'-',num2str(i));
+    im = imread(['train/' arxiu],'jpg');
+    I6(:,:,:,(i+1)) = im;
+
+end
+
+for i = 1:10
+    
+    [green,prob] = verd(I1(:,:,:,i));
+    dades_tots_grups(i,1,1) = prob;
+    
+    [numhor,numver] = detect(I1(:,:,:,i));
+    dades_tots_grups(i,1,2)= numhor + numver;
+        
+end
+
+
+for i = 1:10
+    
+    [green,prob] = verd(I2(:,:,:,i));
+    dades_tots_grups(i,2,1) = prob;
+    
+    [numhor,numver] = detect(I2(:,:,:,i));
+    dades_tots_grups(i,2,2)= numhor + numver;
+        
+end
+
+
+for i = 1:10
+    
+    [green,prob] = verd(I3(:,:,:,i));
+    dades_tots_grups(i,3,1) = prob;
+    
+    [numhor,numver] = detect(I3(:,:,:,i));
+    dades_tots_grups(i,3,2)= numhor + numver;
+        
+end
+
+for i = 1:10
+    
+    [green,prob] = verd(I4(:,:,:,i));
+    dades_tots_grups(i,4,1) = prob;
+    
+    [numhor,numver] = detect(I4(:,:,:,i));
+    dades_tots_grups(i,4,2)= numhor + numver;
+        
+end
+
+for i = 1:10
+    
+    [green,prob] = verd(I5(:,:,:,i));
+    dades_tots_grups(i,5,1) = prob;
+    
+    [numhor,numver] = detect(I5(:,:,:,i));
+    dades_tots_grups(i,5,2)= numhor + numver;
+        
+end
+
+for i = 1:10
+    
+    [green,prob] = verd(I6(:,:,:,i));
+    dades_tots_grups(i,6,1) = prob;
+    
+    [numhor,numver] = detect(I6(:,:,:,i));
+    dades_tots_grups(i,6,2)= numhor + numver;
+        
+end
 
 % calculs finals
 
@@ -111,7 +206,7 @@ end
 
     mitjana_linia_natura = sum(total_linia_natura(:))/6;
     mitjana_linia_ciutat = sum(total_linia_ciutat(:))/6;
-end
+
     
     
 

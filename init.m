@@ -41,9 +41,6 @@ for i = 2:length(FitxersEntrenament)
 end
 LlistaEntrenament = mat2cell(LlistaEntrenament);
 
-% Omple el desplegable dels Fitxers d' Entrenament amb els seus noms
-set(handles.popup_entrenament,'string',LlistaEntrenament);
-
 % Llegeix fitxers .txt del directori de train
 FitxersProva = dir([pwd '/test/*.txt']);
 LlistaProva = FitxersProva(1).name;
@@ -63,25 +60,8 @@ function varargout = init_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on selection change in popup_entrenament.
-function popup_entrenament_Callback(hObject, eventdata, handles)
-
-
-
-% --- Executes during object creation, after setting all properties.
-function popup_entrenament_CreateFcn(hObject, eventdata, handles)
-
-handles.popup_entrenament = hObject;
-guidata(hObject, handles);
-
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on selection change in popup_prova.
 function popup_prova_Callback(hObject, eventdata, handles)
-
 
 
 % --- Executes during object creation, after setting all properties.
@@ -98,11 +78,21 @@ end
 % --- Executes on button press in push_entrena.
 function push_entrena_Callback(hObject, eventdata, handles)
 
-%Llegeix el contingut del desplegable d'entrenament 
-file = getCurrentPopupString(handles.popup_entrenament);
+% Crida a la funció train i li passa el nom del fitxer a obrir
+[mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
 
-%Guarda l'arxiu seleccionat en una variable
-o_file = fopen(['train/' file]);
+% Càlcul de llindars idonis.
+K_verd = (mitjana_verd_natura + mitjana_verd_ciutat)/2;
+K_linies = (mitjana_linia_natura + mitjana_linia_ciutat)/2;
+
+% Display dels llindars a la interfície.
+set(handles.verd_percent, 'String', [num2str(K_verd*100) ' %']);
+set(handles.n_linies, 'String', num2str(K_linies));
+
+% Habilita el botó de classificació
+set(handles.push_classifica,'Enable','on');
+
+
 
 
 
@@ -114,3 +104,52 @@ file = getCurrentPopupString(handles.popup_prova);
 
 %Guarda l'arxiu seleccionat en una variable
 o_file = fopen(['train/' file]);
+
+
+% --- Executes on selection change in popupmenu3.
+function popupmenu3_Callback(hObject, eventdata, handles)
+
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu3_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in popupmenu4.
+function popupmenu4_Callback(hObject, eventdata, handles)
+
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu4_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit2_Callback(hObject, eventdata, handles)
+% hObject    handle to edit2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit2 as text
+%        str2double(get(hObject,'String')) returns contents of edit2 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

@@ -6,9 +6,9 @@ K_verd = (mitjana_verd_natura + mitjana_verd_ciutat)/2;
 K_linies = (mitjana_linia_natura + mitjana_linia_ciutat)/2;
 
 
-disp(strcat('Llindars idonis calculats pel classificador:'));
-disp(strcat('Verd: ',num2str(K_verd)));
-disp(strcat('Linies: ',num2str(K_linies)));
+% disp(strcat('Llindars idonis calculats pel classificador:'));
+% disp(strcat('Verd: ',num2str(K_verd)));
+% disp(strcat('Linies: ',num2str(K_linies)));
         
 
 disp('CLASSIFICACIÓ MITJANÇANT EL LLINDAR APRÈS');
