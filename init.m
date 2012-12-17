@@ -129,6 +129,8 @@ global mitjana_verd_natura;
 global mitjana_verd_ciutat;
 global mitjana_linia_natura;
 global mitjana_linia_ciutat;
+global grup;
+global num;
 
 % Llegeix el contingut del desplegable d'entrenament 
 file = getCurrentPopupString(handles.popup_prova);
@@ -178,6 +180,7 @@ complexData = { ...
 set(handles.conf_matrix, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
 
 % Mostra el nombre d'imatges ben/mal classificades.
+global imatges;
 imatges = comprova_imatges(num, grup);
 imatges_correctes = sum(imatges);
 
@@ -194,7 +197,6 @@ elseif imatges_correctes/num == 0.5
 else
     set(handles.percent_imatges, 'ForegroundColor', 'g');
 end
-
 
 % Posa disponible la visualització dels resultats erronis.
 set(handles.mal_classificades_button, 'Enable', 'on');
@@ -235,6 +237,22 @@ end
 
 % --- Executes on button press in mal_classificades_button.
 function mal_classificades_button_Callback(hObject, eventdata, handles)
-% hObject    handle to mal_classificades_button (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+global grup;
+global num;
+global imatges;
+
+% Obrim el fitxer del grup.
+file = fopen(['test/' grup '.txt']);
+incorrectes = num - sum(imatges);
+
+% Mostra les imatges mal classificades en una figura.
+figure;
+j = 1;
+for i = 1:num
+    linia = fgetl(file);
+    if imatges(i) == 0
+        img = imread(['test/' linia(1:4) '.jpg']);
+        subplot(1,incorrectes,j), subimage(img);
+        j = j + 1;
+    end
+end
