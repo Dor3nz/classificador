@@ -7,8 +7,11 @@ under the module Gestió i Distribució de Senyals Audiovisuals (GDSA) from Grau
 The program aim is to classify images between rural or urban as well as giving some details about
 the classifier itself, such as Precision and Recall graphics or Confusion Matrices.
 
-
-This project is currently WIP.
+This project has been developed by:
+- Marc Andrés
+- Sergi Alonso
+- [Aleix Casanovas](http://github.com/aleics)
+- [Genís Matutes](http://github.com/dor3nz)
 
 Manual d'instruccions
 =====================
