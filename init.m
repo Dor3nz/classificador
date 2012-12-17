@@ -143,6 +143,32 @@ set(handles.precisio, 'String', y_precisio);
 set(handles.record, 'String', x_record);
 
 % Dibuixa la gràfica de precisió i record.
+x_record = [0 x_record];
+y_precisio = [1 y_precisio];
+
+size_record = size(x_record);
+size_precisio = size(y_precisio);
+
+x_record_plot = zeros(1,size_record(2));
+y_precisio_plot = zeros(1,size_precisio(2));
+
+for q = 1:size_record(2)
+    [x_record_plot(q),posicio] = min(x_record);
+    x_record(posicio) = 2;
+    y_precisio_plot(q) = y_precisio(posicio);    
+end
+
+size_r_plot = size(x_record_plot);
+
+x_record_plot = [x_record_plot x_record_plot(size_r_plot(2))];
+y_precisio_plot = [y_precisio 0];
+
+plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
+                'MarkerEdgeColor','k',...
+                'MarkerFaceColor','k',...
+                'MarkerSize',3); 
+title 'gràfic precissió/record'; 
+xlabel 'record';ylabel 'precissió';
 
 % Dibuixa la matriu de confusió.
 
