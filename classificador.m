@@ -11,15 +11,15 @@ function classificador(file, llindar_verd, llindar_linies)
 cont = zeros(1,10);
 
 % Nombre d'imatges a classificar.
-num = 10;
+global num;
+
 
 % Obre el fitxer enviat desde la interf�cie.
-fitxer = fopen([file '.txt'])
+%fitxer = fopen([file '.txt'])
 
 % Lectura de les imatges i posterior emmagatzematge d'aquestes a I.
 for i = 0:(num-1)
-    fila = fgetl(fitxer);
-    nom_imatge = fila(1:4);
+    nom_imatge = strcat(file,'-',num2str(i));
     imatge = imread(nom_imatge,'jpg');
     I(:,:,:,(i+1)) = imatge;
 end
