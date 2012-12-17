@@ -1,14 +1,12 @@
-function [x_record,y_precisio] = precisio_record(grup)
-
-global num;
+function [x_record,y_precisio] = precisio_record(grup, num)
 
 positius_certs = 0;
 negatius_falsos = 0;
 positius_falsos = 0;
 negatius_certs = 0;
 
-fid = fopen(strcat(grup,'.txt'));
-fid_out = fopen(strcat(grup,'out.txt'));
+fid = fopen(['test/' grup '.txt']);
+fid_out = fopen([grup 'out.txt']);
 
 in = fscanf(fid,'%s');
 out = fscanf(fid_out,'%s');

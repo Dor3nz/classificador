@@ -1,13 +1,11 @@
-function matrius(grup)
-
-global num;
+function [positius_certs, negatius_falsos, positius_falsos, negatius_certs] = matrius(grup, num)
 
 positius_certs = 0;
 negatius_falsos = 0;
 positius_falsos = 0;
 negatius_certs = 0;
 
-fid = fopen(strcat(grup,'.txt'));
+fid = fopen(['test/' grup '.txt']);
 fid_out = fopen(strcat(grup,'out.txt'));
 
 in = fscanf(fid,'%s');
@@ -42,12 +40,3 @@ for q = 1:num
         negatius_certs = negatius_certs + 1;
     end
 end
-
-f = figure('Position', [100 100 752 350]);
-t = uitable('Parent', f, 'Position', [25 25 700 200]);
-
-complexData = { ...
-    'Positius predicció' positius_certs negatius_falsos; ...
-    'Negatius predicció' positius_falsos negatius_certs;};
-set(t, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
-        

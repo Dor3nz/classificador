@@ -1,7 +1,7 @@
 %% CLASSIFICADOR DE IMATGES NATURE/CITY
 %  Aleix Casanovas, Sergi Alonso, Marc Andr�s i Gen�s Matutes
 
-function classificador(file, llindar_verd, llindar_linies)
+function classificador(file, num, llindar_verd, llindar_linies)
 
 %% GUARDA LES IMATGES
 
@@ -10,17 +10,10 @@ function classificador(file, llindar_verd, llindar_linies)
 % imatge, �s positiu o negatiu respectivament.
 cont = zeros(1,10);
 
-% Nombre d'imatges a classificar.
-global num;
-
-
-% Obre el fitxer enviat desde la interf�cie.
-%fitxer = fopen([file '.txt'])
-
 % Lectura de les imatges i posterior emmagatzematge d'aquestes a I.
 for i = 0:(num-1)
     nom_imatge = strcat(file,'-',num2str(i));
-    imatge = imread(nom_imatge,'jpg');
+    imatge = imread(['test/' nom_imatge],'jpg');
     I(:,:,:,(i+1)) = imatge;
 end
 

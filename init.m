@@ -1,6 +1,5 @@
 function varargout = init(varargin)
 
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -32,19 +31,6 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % Llegeix fitxers .txt del directori de train
-FitxersEntrenament = dir([pwd '/train/*.txt']);
-LlistaEntrenament = FitxersEntrenament(1).name;
-
-% Omple el vector vertical amb els noms dels fitxers
-for i = 2:length(FitxersEntrenament)
-    LlistaEntrenament = vertcat(LlistaEntrenament, FitxersEntrenament(i).name);
-end
-LlistaEntrenament = mat2cell(LlistaEntrenament);
-
-% Omple el desplegable dels Fitxers d' Entrenament amb els seus noms
-set(handles.popup_entrenament,'string',LlistaEntrenament);
-
-% Llegeix fitxers .txt del directori de train
 FitxersProva = dir([pwd '/test/*.txt']);
 LlistaProva = FitxersProva(1).name;
 
@@ -56,6 +42,24 @@ LlistaProva = mat2cell(LlistaProva);
 % Omple el desplegable dels Fitxers de Prova amb els seus noms
 set(handles.popup_prova,'string',LlistaProva);
 
+% Emplena el desplegable de N imatges a llegir en funció del nombre de
+% línies que hi ha a l'arxiu seleccionat.
+fid = fopen(['test/' getCurrentPopupString(handles.popup_prova)]);
+
+nLinies = 0;
+while (fgets(fid) ~= -1),
+  nLinies = nLinies+1;
+end
+fclose(fid);
+
+% Creació i assignació del String del desplegable.
+n_imatges = 1;
+for i = 2:nLinies
+    n_imatges = vertcat(n_imatges, i);
+end
+n_imatges = mat2cell(n_imatges);
+set(handles.n_imatges_popup, 'String', n_imatges);
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = init_OutputFcn(hObject, eventdata, handles) 
@@ -63,26 +67,25 @@ function varargout = init_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on selection change in popup_entrenament.
-function popup_entrenament_Callback(hObject, eventdata, handles)
-
-
-
-% --- Executes during object creation, after setting all properties.
-function popup_entrenament_CreateFcn(hObject, eventdata, handles)
-
-handles.popup_entrenament = hObject;
-guidata(hObject, handles);
-
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on selection change in popup_prova.
 function popup_prova_Callback(hObject, eventdata, handles)
 
+% Llegeix i compta les línies del fitxer seleccionat.
+fid = fopen(['test/' getCurrentPopupString(handles.popup_prova)]);
 
+nLinies = 0;
+while (fgets(fid) ~= -1),
+  nLinies = nLinies+1;
+end
+fclose(fid);
+
+% Creació i assignació del String del desplegable.
+n_imatges = 1;
+for i = 2:nLinies
+    n_imatges = vertcat(n_imatges, i);
+end
+n_imatges = mat2cell(n_imatges);
+set(handles.n_imatges_popup, 'String', n_imatges);
 
 % --- Executes during object creation, after setting all properties.
 function popup_prova_CreateFcn(hObject, eventdata, handles)
@@ -97,20 +100,159 @@ end
 
 % --- Executes on button press in push_entrena.
 function push_entrena_Callback(hObject, eventdata, handles)
+%Variables globals.
+global mitjana_verd_natura;
+global mitjana_verd_ciutat;
+global mitjana_linia_natura;
+global mitjana_linia_ciutat;
 
-%Llegeix el contingut del desplegable d'entrenament 
-file = getCurrentPopupString(handles.popup_entrenament);
+% Crida a la funció train i li passa el nom del fitxer a obrir
+[mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
 
-%Guarda l'arxiu seleccionat en una variable
-o_file = fopen(['train/' file]);
+% Càlcul de llindars idonis.
+K_verd = (mitjana_verd_natura + mitjana_verd_ciutat)/2;
+K_linies = (mitjana_linia_natura + mitjana_linia_ciutat)/2;
+
+% Display dels llindars a la interfície.
+set(handles.verd_percent, 'String', [num2str(K_verd*100) ' %']);
+set(handles.n_linies, 'String', num2str(K_linies));
+
+% Habilita el botó de classificació
+set(handles.push_classifica,'Enable','on');
 
 
 
 % --- Executes on button press in push_classifica.
 function push_classifica_Callback(hObject, eventdata, handles)
+%Variables globals.
+global mitjana_verd_natura;
+global mitjana_verd_ciutat;
+global mitjana_linia_natura;
+global mitjana_linia_ciutat;
+global grup;
+global num;
 
-%Llegeix el contingut del desplegable d'entrenament 
+% Llegeix el contingut del desplegable d'entrenament 
 file = getCurrentPopupString(handles.popup_prova);
 
-%Guarda l'arxiu seleccionat en una variable
-o_file = fopen(['train/' file]);
+% Lectura del record i la precisió.
+grup = file(1:2);
+num = str2num(getCurrentPopupString(handles.n_imatges_popup));
+[x_record,y_precisio] = classificacio_llindars(grup, num, mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat);
+
+% Escriu el record i la precisió a la interfície.
+set(handles.precisio, 'String', y_precisio);
+set(handles.record, 'String', x_record);
+
+% Dibuixa la gràfica de precisió i record.
+x_record = [0 x_record];
+y_precisio = [1 y_precisio];
+
+size_record = size(x_record);
+size_precisio = size(y_precisio);
+
+x_record_plot = zeros(1,size_record(2));
+y_precisio_plot = zeros(1,size_precisio(2));
+
+for q = 1:size_record(2)
+    [x_record_plot(q),posicio] = min(x_record);
+    x_record(posicio) = 2;
+    y_precisio_plot(q) = y_precisio(posicio);    
+end
+
+size_r_plot = size(x_record_plot);
+
+x_record_plot = [x_record_plot x_record_plot(size_r_plot(2))];
+y_precisio_plot = [y_precisio 0];
+
+plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
+                'MarkerEdgeColor','k',...
+                'MarkerFaceColor','k',...
+                'MarkerSize',3);  
+xlabel 'record';ylabel 'precissió';
+
+% Dibuixa la matriu de confusió.
+[positius_certs, negatius_falsos, positius_falsos, negatius_certs] = matrius(grup, num);
+
+complexData = { ...
+    'Positius predicció' positius_certs negatius_falsos; ...
+    'Negatius predicció' positius_falsos negatius_certs;};
+set(handles.conf_matrix, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
+
+% Mostra el nombre d'imatges ben/mal classificades.
+global imatges;
+imatges = comprova_imatges(num, grup);
+imatges_correctes = sum(imatges);
+
+percentatge = [num2str(imatges_correctes) '/' num2str(num)];
+set(handles.percent_imatges, 'String', percentatge);
+
+% Posa el color vermell, verd o groc si el total de imatges ben
+% classificades supera el 50%, no supera el 50% o és exactament 50%
+% respectivament.
+if imatges_correctes/num < 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'r');
+elseif imatges_correctes/num == 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'y');
+else
+    set(handles.percent_imatges, 'ForegroundColor', 'g');
+end
+
+% Posa disponible la visualització dels resultats erronis.
+set(handles.mal_classificades_button, 'Enable', 'on');
+
+% --- Executes on selection change in popupmenu3.
+function popupmenu3_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu3_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in n_imatges_popup.
+function n_imatges_popup_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function n_imatges_popup_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+function edit2_Callback(hObject, eventdata, handles)
+
+% --- Executes during object creation, after setting all properties.
+function edit2_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in mal_classificades_button.
+function mal_classificades_button_Callback(hObject, eventdata, handles)
+global grup;
+global num;
+global imatges;
+
+% Obrim el fitxer del grup.
+file = fopen(['test/' grup '.txt']);
+incorrectes = num - sum(imatges);
+
+% Mostra les imatges mal classificades en una figura.
+figure;
+j = 1;
+for i = 1:num
+    linia = fgetl(file);
+    if imatges(i) == 0
+        img = imread(['test/' linia(1:4) '.jpg']);
+        subplot(1,incorrectes,j), subimage(img);
+        j = j + 1;
+    end
+end

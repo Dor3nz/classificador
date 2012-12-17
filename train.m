@@ -1,40 +1,20 @@
 function [mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train
-numgrups = 0;
 
 dades_tots_grups = zeros(10,6,2);
 
-disp('Llegim els diferents grups');
-disp('11');
-numgrups = numgrups + 1;
-disp('12');
-numgrups = numgrups + 1;
-disp('21');
-numgrups = numgrups + 1;
-disp('22');
-numgrups = numgrups + 1;
-disp('31');
-numgrups = numgrups + 1;
-disp('32');
-numgrups = numgrups + 1;
+grup1 = '11';
+grup2 = '12';
+grup3 = '21';
+grup4 = '22';
+grup5 = '31';
+grup6 = '32';
 
-grup = zeros(1,numgrups);
-
-grup1 = input('Primer grup ','s');
-grup2 = input('Segon grup ','s');
-grup3 = input('Tercer grup ','s');
-grup4 = input('Quart grup ','s');
-grup5 = input('Cinquè grup ','s');
-grup6 = input('Sisè grup ','s');
-
-fid1 = fopen(strcat(grup1,'.txt'));
-fid2 = fopen(strcat(grup2,'.txt'));
-fid3 = fopen(strcat(grup3,'.txt'));
-fid4 = fopen(strcat(grup4,'.txt'));
-fid5 = fopen(strcat(grup5,'.txt'));
-fid6 = fopen(strcat(grup6,'.txt'));
-
-
-valor_da = zeros(1,7);
+fid1 = fopen(['train/' grup1 '.txt']);
+fid2 = fopen(['train/' grup2 '.txt']);
+fid3 = fopen(['train/' grup3 '.txt']);
+fid4 = fopen(['train/' grup4 '.txt']);
+fid5 = fopen(['train/' grup5 '.txt']);
+fid6 = fopen(['train/' grup6 '.txt']);
 
 valor_da1 = fscanf(fid1,'%s');
 valor_da2 = fscanf(fid2,'%s');
@@ -90,42 +70,42 @@ end
 
 for i = 0:9
     arxiu = strcat(grup1,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I1(:,:,:,(i+1)) = im;
 
 end
 
 for i = 0:9
     arxiu = strcat(grup2,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I2(:,:,:,(i+1)) = im;
 
 end
 
 for i = 0:9
     arxiu = strcat(grup3,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I3(:,:,:,(i+1)) = im;
 
 end
 
 for i = 0:9
     arxiu = strcat(grup4,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I4(:,:,:,(i+1)) = im;
 
 end
 
 for i = 0:9
     arxiu = strcat(grup5,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I5(:,:,:,(i+1)) = im;
 
 end
 
 for i = 0:9
     arxiu = strcat(grup6,'-',num2str(i));
-    im = imread(arxiu,'jpg');
+    im = imread(['train/' arxiu],'jpg');
     I6(:,:,:,(i+1)) = im;
 
 end
@@ -226,6 +206,7 @@ end
 
     mitjana_linia_natura = sum(total_linia_natura(:))/6;
     mitjana_linia_ciutat = sum(total_linia_ciutat(:))/6;
+
     
     
 
