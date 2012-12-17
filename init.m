@@ -1,6 +1,5 @@
 function varargout = init(varargin)
 
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -58,6 +57,7 @@ n_imatges = 1;
 for i = 2:nLinies
     n_imatges = vertcat(n_imatges, i);
 end
+n_imatges = mat2cell(n_imatges);
 set(handles.n_imatges_popup, 'String', n_imatges);
 
 
@@ -84,6 +84,7 @@ n_imatges = 1;
 for i = 2:nLinies
     n_imatges = vertcat(n_imatges, i);
 end
+n_imatges = mat2cell(n_imatges);
 set(handles.n_imatges_popup, 'String', n_imatges);
 
 % --- Executes during object creation, after setting all properties.
@@ -99,6 +100,11 @@ end
 
 % --- Executes on button press in push_entrena.
 function push_entrena_Callback(hObject, eventdata, handles)
+%Variables globals.
+global mitjana_verd_natura;
+global mitjana_verd_ciutat;
+global mitjana_linia_natura;
+global mitjana_linia_ciutat;
 
 % Crida a la funció train i li passa el nom del fitxer a obrir
 [mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
@@ -116,21 +122,33 @@ set(handles.push_classifica,'Enable','on');
 
 
 
-
-
 % --- Executes on button press in push_classifica.
 function push_classifica_Callback(hObject, eventdata, handles)
+%Variables globals.
+global mitjana_verd_natura;
+global mitjana_verd_ciutat;
+global mitjana_linia_natura;
+global mitjana_linia_ciutat;
 
-%Llegeix el contingut del desplegable d'entrenament 
+% Llegeix el contingut del desplegable d'entrenament 
 file = getCurrentPopupString(handles.popup_prova);
 
-%Guarda l'arxiu seleccionat en una variable
-o_file = fopen(['train/' file]);
+% Lectura del record i la precisió.
+grup = file(1:2);
+num = str2num(getCurrentPopupString(handles.n_imatges_popup));
+[x_record,y_precisio] = classificacio_llindars(grup, num, mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat);
+
+% Escriu el record i la precisió a la interfície.
+set(handles.precisio, 'String', y_precisio);
+set(handles.record, 'String', x_record);
+
+% Dibuixa la gràfica de precisió i record.
+
+% Dibuixa la matriu de confusió.
 
 
 % --- Executes on selection change in popupmenu3.
 function popupmenu3_Callback(hObject, eventdata, handles)
-
 
 
 % --- Executes during object creation, after setting all properties.
@@ -145,7 +163,6 @@ end
 function n_imatges_popup_Callback(hObject, eventdata, handles)
 
 
-
 % --- Executes during object creation, after setting all properties.
 function n_imatges_popup_CreateFcn(hObject, eventdata, handles)
 
@@ -154,24 +171,11 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-
 function edit2_Callback(hObject, eventdata, handles)
-% hObject    handle to edit2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit2 as text
-%        str2double(get(hObject,'String')) returns contents of edit2 as a double
-
 
 % --- Executes during object creation, after setting all properties.
 function edit2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end

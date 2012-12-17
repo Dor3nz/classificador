@@ -2,7 +2,7 @@
 %  Aleix Casanovas, Sergi Alonso, Marc Andrés i Genís Matutes
 
 %% ENTRENAMENT
-[mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
+%[mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
 
 %% APLICACIÓ DE DIFERENTS LLINDARS / MATRIUS DE CONVERSIO
 [x_record,y_precisio] = classificacio_llindars(mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat);

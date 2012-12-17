@@ -1,6 +1,4 @@
-function [x_record,y_precisio] = precisio_record(grup)
-
-global num;
+function [x_record,y_precisio] = precisio_record(grup, num)
 
 positius_certs = 0;
 negatius_falsos = 0;
