@@ -66,7 +66,7 @@ Interfície gràfica
 A continuació es mostra una captura de la interfície gràfica del classificador
 i l'explicació dels seus continguts.
 
-![]()
+![](http://img.photobucket.com/albums/v488/karneater/screenshot_ui_zps507c1cff.png)
 
 1. Entrenament
 Conté els elements necessaris per a realitzar l'entrenament amb les dades
