@@ -177,8 +177,27 @@ complexData = { ...
     'Negatius predicció' positius_falsos negatius_certs;};
 set(handles.conf_matrix, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
 
-% Posa disponible la visualització dels resultats erronis.
+% Mostra el nombre d'imatges ben/mal classificades.
+imatges = comprova_imatges(num, grup);
+imatges_correctes = sum(imatges);
 
+percentatge = [num2str(imatges_correctes) '/' num2str(num)];
+set(handles.percent_imatges, 'String', percentatge);
+
+% Posa el color vermell, verd o groc si el total de imatges ben
+% classificades supera el 50%, no supera el 50% o és exactament 50%
+% respectivament.
+if imatges_correctes/num < 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'r');
+elseif imatges_correctes/num == 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'y');
+else
+    set(handles.percent_imatges, 'ForegroundColor', 'g');
+end
+
+
+% Posa disponible la visualització dels resultats erronis.
+set(handles.mal_classificades_button, 'Enable', 'on');
 
 % --- Executes on selection change in popupmenu3.
 function popupmenu3_Callback(hObject, eventdata, handles)
@@ -212,3 +231,10 @@ function edit2_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in mal_classificades_button.
+function mal_classificades_button_Callback(hObject, eventdata, handles)
+% hObject    handle to mal_classificades_button (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
