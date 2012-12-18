@@ -35,6 +35,7 @@ seus directoris.
     - /train
     - /validacio_creuada
     - classificacio_llindars.m
+    - classificacio_llindars_manuals.m
     - classificador.m
     - comprova_imatges.m
     - detect.m
@@ -44,6 +45,7 @@ seus directoris.
     - matrius.m
     - precisio_record.m
     - train.m
+    - validació creuada.m
     - verd.m
 
 És important tenir guardats els documents .txt que contenen les referències per
