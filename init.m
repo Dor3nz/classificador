@@ -106,6 +106,10 @@ global mitjana_verd_ciutat;
 global mitjana_linia_natura;
 global mitjana_linia_ciutat;
 
+% Canvia status a entrenant.
+set(handles.text_estat, 'String', 'Entrenant...');
+drawnow
+
 % Crida a la funció train i li passa el nom del fitxer a obrir
 [mitjana_verd_natura,mitjana_verd_ciutat,mitjana_linia_natura,mitjana_linia_ciutat] = train;
 
@@ -120,6 +124,10 @@ set(handles.n_linies, 'String', num2str(K_linies));
 % Habilita el botó de classificació
 set(handles.push_classifica,'Enable','on');
 
+% Canvia status a disponible.
+set(handles.text_estat, 'String', 'Disponible');
+drawnow
+
 
 
 % --- Executes on button press in push_classifica.
@@ -131,6 +139,10 @@ global mitjana_linia_natura;
 global mitjana_linia_ciutat;
 global grup;
 global num;
+
+% Canvia status a classificant.
+set(handles.text_estat, 'String', 'Classificant...');
+drawnow
 
 % Llegeix el contingut del desplegable d'entrenament 
 file = getCurrentPopupString(handles.popup_prova);
@@ -168,7 +180,8 @@ y_precisio_plot = [y_precisio 0];
 plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
                 'MarkerEdgeColor','k',...
                 'MarkerFaceColor','k',...
-                'MarkerSize',3);  
+                'MarkerSize',3);
+title 'Classificació'; 
 xlabel 'record';ylabel 'precissió';
 
 % Dibuixa la matriu de confusió.
@@ -200,6 +213,10 @@ end
 
 % Posa disponible la visualització dels resultats erronis.
 set(handles.mal_classificades_button, 'Enable', 'on');
+
+% Canvia status a disponible.
+set(handles.text_estat, 'String', 'Disponible');
+drawnow
 
 % --- Executes on selection change in popupmenu3.
 function popupmenu3_Callback(hObject, eventdata, handles)
@@ -256,3 +273,50 @@ for i = 1:num
         j = j + 1;
     end
 end
+
+
+% --- Executes on selection change in popup_iteracions.
+function popup_iteracions_Callback(hObject, eventdata, handles)
+
+
+
+% --- Executes during object creation, after setting all properties.
+function popup_iteracions_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in push_valida.
+function push_valida_Callback(hObject, eventdata, handles)
+global iteracions;
+% Canvia status a validant.
+set(handles.text_estat, 'String', 'Validant...');
+drawnow
+
+% Inicialització de la validació.
+iteracions = str2num(getCurrentPopupString(handles.popup_iteracions));
+
+% Execució de la validació creuada.
+[x_record_val,y_precisio_val]= validacio_creuada(iteracions);
+
+% Dibuix del gràfic.
+plot(handles.axes_prec_rec, x_record_val,y_precisio_val,'-rs',...
+                'MarkerEdgeColor','k',...
+                'MarkerFaceColor','k',...
+                'MarkerSize',3); 
+title 'Validació Creuada'; 
+xlabel 'record';ylabel 'precissió';
+
+% Canvia status a disponible.
+set(handles.text_estat, 'String', 'Validant...');
+drawnow
+
+% --- Executes on button press in itera_endarrere.
+function itera_endarrere_Callback(hObject, eventdata, handles)
+
+
+% --- Executes on button press in itera_endavant.
+function itera_endavant_Callback(hObject, eventdata, handles)
+
