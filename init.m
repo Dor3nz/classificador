@@ -320,3 +320,56 @@ function itera_endarrere_Callback(hObject, eventdata, handles)
 % --- Executes on button press in itera_endavant.
 function itera_endavant_Callback(hObject, eventdata, handles)
 
+
+
+% --- Executes on button press in push_classifica_manual.
+function push_classifica_manual_Callback(hObject, eventdata, handles)
+% hObject    handle to push_classifica_manual (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function manual_verd_Callback(hObject, eventdata, handles)
+% hObject    handle to manual_verd (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of manual_verd as text
+%        str2double(get(hObject,'String')) returns contents of manual_verd as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function manual_verd_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to manual_verd (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function manual_linies_Callback(hObject, eventdata, handles)
+% hObject    handle to manual_linies (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of manual_linies as text
+%        str2double(get(hObject,'String')) returns contents of manual_linies as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function manual_linies_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to manual_linies (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
