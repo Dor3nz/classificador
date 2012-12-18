@@ -77,29 +77,29 @@ i l'explicació dels seus continguts.
 
 ![](http://img.photobucket.com/albums/v488/karneater/ui_final_zpsc9dfdee0.png)
 
-1. Entrenament
+1. **Entrenament**:
 Conté els elements necessaris per a realitzar l'entrenament amb les dades
 corresponents.
 
-2. Classificació
+2. **Classificació**:
 Conté els elements necessaris per a classificar les imatges de prova.
 
-3. Anàlisi de resultats
+3. **Anàlisi de resultats**:
 Mostra un anàlisi dels resultats obtinguts per a poder obtenir un valor de
 qualitat del classificador a través de varies dades.
 
-4. Resultats
+4. **Resultats**:
 Mostra el nombre d'imatges correctament classificades i permet veure les que
 no. Apareixen en vermell, groc o verd en funció de si s'han classificat bé
 menys del 50% de les imatges, el 50% exacte o més del 50%, respectivament.
 
-5. Validació creuada
+5. **Validació creuada**:
 Permet dur a terme la validació creuada de 1 a 5 iteracions i visualitzar els
 gràfics de precisió i record corresponents.
 
-6. Estat
+6. **Estat**:
 El programa mostra el seu estat actual dins d'aquest requadre. Sempre que no
-sigui disponible el programa està processant dades al darrere.
+sigui _Disponible_ el programa està processant dades al darrere.
 
 Funcionament bàsic
 ------------------
