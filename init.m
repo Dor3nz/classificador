@@ -256,3 +256,47 @@ for i = 1:num
         j = j + 1;
     end
 end
+
+
+% --- Executes on selection change in popupmenu5.
+function popupmenu5_Callback(hObject, eventdata, handles)
+% hObject    handle to popupmenu5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns popupmenu5 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popupmenu5
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu5_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popupmenu5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in push_valida.
+function push_valida_Callback(hObject, eventdata, handles)
+% hObject    handle to push_valida (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in itera_endarrere.
+function itera_endarrere_Callback(hObject, eventdata, handles)
+% hObject    handle to itera_endarrere (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in itera_endavant.
+function itera_endavant_Callback(hObject, eventdata, handles)
+% hObject    handle to itera_endavant (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
