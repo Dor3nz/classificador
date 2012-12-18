@@ -75,7 +75,7 @@ Interfície gràfica
 A continuació es mostra una captura de la interfície gràfica del classificador
 i l'explicació dels seus continguts.
 
-![](http://img.photobucket.com/albums/v488/karneater/ui_final_zpsc9dfdee0.png)
+![](http://img.photobucket.com/albums/v488/karneater/ui_zps7f0454fa.png)
 
 1. **Entrenament**:
 Conté els elements necessaris per a realitzar l'entrenament amb les dades
@@ -101,6 +101,10 @@ gràfics de precisió i record corresponents.
 El programa mostra el seu estat actual dins d'aquest requadre. Sempre que no
 sigui _Disponible_ el programa està processant dades al darrere.
 
+7. **Llindars manuals**
+Permet acumular diferents valors de precisio i record i veure'ls a la gràfica
+per llindars establerts per l'usuari.
+
 Funcionament bàsic
 ------------------
 Per a dur a terme la classificació d'un conjunt d'imatges referenciades en un
@@ -123,6 +127,10 @@ document .txt cal seguir els següents passos:
 6. A l'apartat de resultats es pot veure quantes imatges del total d'imatges a
    classificar han estat classificades correctament. A través del botó **mostra**
    és possible veure quines imatges han estat classificades de manera errònia.
+7. Per veure una gràfica de precisió i record amb valors acumulats a través de
+   llindars donats per l'usuari només cal posar els llindars als camps de text
+   pertinents i prémer **Classifica**. (Important donar el valor de verd en %,
+   per exemple 50).
 
 Validació Creuada
 -----------------
