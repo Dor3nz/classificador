@@ -214,6 +214,11 @@ end
 % Posa disponible la visualització dels resultats erronis.
 set(handles.mal_classificades_button, 'Enable', 'on');
 
+% Disponible la utilitat de llindars manuals.
+set(handles.manual_verd, 'Enable', 'on');
+set(handles.manual_linies, 'Enable', 'on');
+set(handles.push_classifica_manual, 'Enable', 'on');
+
 % Canvia status a disponible.
 set(handles.text_estat, 'String', 'Disponible');
 drawnow
@@ -324,52 +329,99 @@ function itera_endavant_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in push_classifica_manual.
 function push_classifica_manual_Callback(hObject, eventdata, handles)
-% hObject    handle to push_classifica_manual (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+global grup;
+global num;
 
+% Canvia status a classificant.
+set(handles.text_estat, 'String', 'Classificant...');
+drawnow
 
+% Lectura dels llindars entrats per l'usuari.
+llindar_verd = str2num(get(handles.manual_verd, 'String'));
+llindar_linies = str2num(get(handles.manual_linies, 'String'));
+
+% Càlcul de precisió i record.
+[x_record, y_precisio] = classificacio_llindars_manuals(grup, num, llindar_verd, llindar_linies);
+
+% Dibuix de la gràfica.
+cla(handles.axes_prec_rec);
+x_record = [0 x_record];
+y_precisio = [1 y_precisio];
+
+size_record = size(x_record);
+size_precisio = size(y_precisio);
+
+x_record_plot = zeros(1,size_record(2));
+y_precisio_plot = zeros(1,size_precisio(2));
+
+for q = 1:size_record(2)
+    [x_record_plot(q),posicio] = min(x_record);
+    x_record(posicio) = 2;
+    y_precisio_plot(q) = y_precisio(posicio);    
+end
+
+size_r_plot = size(x_record_plot);
+
+x_record_plot = [x_record_plot x_record_plot(size_r_plot(2))];
+y_precisio_plot = [y_precisio 0];
+
+plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
+                'MarkerEdgeColor','k',...
+                'MarkerFaceColor','k',...
+                'MarkerSize',3); 
+title 'Classificació Manual'; 
+xlabel 'record';ylabel 'precissió';
+
+% Càlcul matrius.
+[positius_certs, negatius_falsos, positius_falsos, negatius_certs] = matrius(grup, num);
+
+complexData = { ...
+    'Positius predicció' positius_certs negatius_falsos; ...
+    'Negatius predicció' positius_falsos negatius_certs;};
+set(handles.conf_matrix, 'Data', complexData, 'ColumnName', {'','Positius reals','Negatius reals'});
+
+% Mostra el nombre d'imatges ben/mal classificades.
+global imatges;
+imatges = comprova_imatges(num, grup);
+imatges_correctes = sum(imatges);
+
+percentatge = [num2str(imatges_correctes) '/' num2str(num)];
+set(handles.percent_imatges, 'String', percentatge);
+
+% Posa el color vermell, verd o groc si el total de imatges ben
+% classificades supera el 50%, no supera el 50% o és exactament 50%
+% respectivament.
+if imatges_correctes/num < 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'r');
+elseif imatges_correctes/num == 0.5
+    set(handles.percent_imatges, 'ForegroundColor', 'y');
+else
+    set(handles.percent_imatges, 'ForegroundColor', 'g');
+end
+
+% Canvia status a disponible.
+set(handles.text_estat, 'String', 'Disponible');
+drawnow
 
 function manual_verd_Callback(hObject, eventdata, handles)
-% hObject    handle to manual_verd (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of manual_verd as text
-%        str2double(get(hObject,'String')) returns contents of manual_verd as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function manual_verd_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to manual_verd (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
 function manual_linies_Callback(hObject, eventdata, handles)
-% hObject    handle to manual_linies (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of manual_linies as text
-%        str2double(get(hObject,'String')) returns contents of manual_linies as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function manual_linies_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to manual_linies (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
