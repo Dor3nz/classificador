@@ -21,7 +21,8 @@ Continguts
 - Estructura del directori
 - Inicialització del programa
 - Interfície gràfica
-- Funcionament
+- Funcionament bàsic
+- Validació creuada
 
 Estructura del directori
 ------------------------
@@ -32,6 +33,7 @@ seus directoris.
 - classificador
     - /test
     - /train
+    - /validacio_creuada
     - classificacio_llindars.m
     - classificador.m
     - comprova_imatges.m
@@ -51,6 +53,10 @@ referència a les imatges que voldrem classificar a dins del directori /test.
 Les imatges han d'anar als mateixos directoris que l'arxiu on s'hi fa
 referència, és a dir, les imatges d'entrenament a /train i les de prova a
 /test.
+
+Si es desitja dur a terme una validació creuada és important que tant els
+fitxers d'entrenament com els de test que es volen utilitzar en aquesta
+estiguin continguts al directori /validació creuada.
 
 Inicialització del programa
 ---------------------------
@@ -86,25 +92,42 @@ qualitat del classificador a través de varies dades.
 Mostra el nombre d'imatges correctament classificades i permet veure les que
 no.
 
-Funcionament
-------------
+5. Validació creuada
+Permet dur a terme la validació creuada de 1 a 5 iteracions i visualitzar els
+gràfics de precisió i record corresponents per mitjà dels cursors.
+
+Funcionament bàsic
+------------------
 Per a dur a terme la classificació d'un conjunt d'imatges referenciades en un
 document .txt cal seguir els següents passos:
 
 1. Guardar les imatges que es volen classificar i el seu corresponent .txt al
    directori /test.
 2. Arrancar el classificador.
-3. Entrenar el classificador fent _click_ al botó *Entrena*. Els llindars
+3. Entrenar el classificador fent _click_ al botó **Entrena**. Els llindars
    establerts pel classificador a través de l'entrenament es mostraràn al
    costat un cop aquest s'hagi dut a terme.
-4. *Un cop han aparegut els valors dels llindars* és possible seleccionar el
+4. **Un cop han aparegut els valors dels llindars** és possible seleccionar el
    fitxer on hi ha contingudes les referències a les imatges que es volen
    classificar. També és possible delimitar el nombre d'imatges a classificar
    de la col·lecció. Un cop configurats ambdós paràmetres cal prémer
-   *Classifica*.
+   **Classifica**.
 5. Els valors de precisió i record, així com la gràfica de precisió i record i
    la matriu de confusió es dibuixaràn a l'apartat d'Anàlisi de resultats un
    cop la classificació s'hagi dut a terme.
 6. A l'apartat de resultats es pot veure quantes imatges del total d'imatges a
-   classificar han estat classificades correctament. A través del botó *mostra*
+   classificar han estat classificades correctament. A través del botó **mostra**
    és possible veure quines imatges han estat classificades de manera errònia.
+
+Validació Creuada
+-----------------
+Si es desitja realitzar una validació creuada cal:
+
+1. Guardar tant imatges com arxius .txt d'entrenament i de test invoucrats en
+   la validació creuada dins del directori /validacio_creuada.
+2. Arrancar el classificador.
+3. Seleccionar el nombre de iteracions que es volen dur a terme per mitjà del
+   desplegable situat a l'apartat Validació Creuada.
+4. Prémer el botó **Valida**.
+5. Utilitzar els botons amb cursors per a navegar entre les diferents gràfiques
+   de precisió i record generades.
