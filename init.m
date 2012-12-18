@@ -147,6 +147,8 @@ global mitjana_linia_natura;
 global mitjana_linia_ciutat;
 global grup;
 global num;
+global x_record_plot;
+global y_precisio_plot;
 
 % Canvia status a classificant.
 set(handles.text_estat, 'String', 'Classificant...');
@@ -165,25 +167,14 @@ set(handles.precisio, 'String', y_precisio);
 set(handles.record, 'String', x_record);
 
 % Dibuixa la gràfica de precisió i record.
-x_record = [0 x_record];
-y_precisio = [1 y_precisio];
+x_record_plot = [x_record_plot x_record];
+y_precisio_plot = [y_precisio_plot y_precisio];
 
-size_record = size(x_record);
-size_precisio = size(y_precisio);
+[x_record_plot, record_order] = sort(x_record_plot);
+y_precisio_plot = y_precisio_plot(record_order);
 
-x_record_plot = zeros(1,size_record(2));
-y_precisio_plot = zeros(1,size_precisio(2));
-
-for q = 1:size_record(2)
-    [x_record_plot(q),posicio] = min(x_record);
-    x_record(posicio) = 2;
-    y_precisio_plot(q) = y_precisio(posicio);    
-end
-
-size_r_plot = size(x_record_plot);
-
-x_record_plot = [x_record_plot x_record_plot(size_r_plot(2))];
-y_precisio_plot = [y_precisio 0];
+x_record_plot = [x_record_plot x_record_plot(length(x_record_plot))];
+y_precisio_plot = [y_precisio_plot 0];
 
 plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
                 'MarkerEdgeColor','k',...
@@ -323,7 +314,7 @@ title 'Validació Creuada';
 xlabel 'record';ylabel 'precissió';
 
 % Canvia status a disponible.
-set(handles.text_estat, 'String', 'Validant...');
+set(handles.text_estat, 'String', 'Disponible');
 drawnow
 
 % --- Executes on button press in itera_endarrere.
@@ -342,6 +333,9 @@ global num;
 global x_record_plot;
 global y_precisio_plot;
 
+x_record_plot = x_record_plot(1:(length(x_record_plot)-1));
+y_precisio_plot = y_precisio_plot(1:(length(y_precisio_plot)-1));
+
 % Canvia status a classificant.
 set(handles.text_estat, 'String', 'Classificant...');
 drawnow
@@ -353,13 +347,19 @@ llindar_linies = str2num(get(handles.manual_linies, 'String'));
 % Càlcul de precisió i record.
 [x_record, y_precisio] = classificacio_llindars_manuals(grup, num, llindar_verd, llindar_linies);
 
-% Dibuix de la gràfica.
+% Actualitza valors precisió i record.
+set(handles.precisio, 'String', num2str(y_precisio));
+set(handles.record, 'String', num2str(x_record));
 
+% Dibuix de la gràfica.
 x_record_plot = [x_record_plot x_record];
 y_precisio_plot = [y_precisio_plot y_precisio];
 
 [x_record_plot, record_order] = sort(x_record_plot);
 y_precisio_plot = y_precisio_plot(record_order);
+
+x_record_plot = [x_record_plot x_record_plot(length(x_record_plot))];
+y_precisio_plot = [y_precisio_plot 0];
 
 plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
                 'MarkerEdgeColor','k',...
