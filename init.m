@@ -168,7 +168,8 @@ y_precisio_plot = [y_precisio 0];
 plot(handles.axes_prec_rec, x_record_plot,y_precisio_plot,'-rs',...
                 'MarkerEdgeColor','k',...
                 'MarkerFaceColor','k',...
-                'MarkerSize',3);  
+                'MarkerSize',3);
+title 'Classificació'; 
 xlabel 'record';ylabel 'precissió';
 
 % Dibuixa la matriu de confusió.
@@ -258,24 +259,14 @@ for i = 1:num
 end
 
 
-% --- Executes on selection change in popupmenu5.
-function popupmenu5_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+% --- Executes on selection change in popup_iteracions.
+function popup_iteracions_Callback(hObject, eventdata, handles)
 
-% Hints: contents = get(hObject,'String') returns popupmenu5 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu5
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu5_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
+function popup_iteracions_CreateFcn(hObject, eventdata, handles)
 
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
@@ -283,20 +274,27 @@ end
 
 % --- Executes on button press in push_valida.
 function push_valida_Callback(hObject, eventdata, handles)
-% hObject    handle to push_valida (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+global iteracions;
+
+% Inicialització de la validació.
+iteracions = str2num(getCurrentPopupString(handles.popup_iteracions));
+
+% Execució de la validació creuada.
+[x_record_val,y_precisio_val]= validacio_creuada(iteracions);
+
+% Dibuix del gràfic.
+plot(handles.axes_prec_rec, x_record_val,y_precisio_val,'-rs',...
+                'MarkerEdgeColor','k',...
+                'MarkerFaceColor','k',...
+                'MarkerSize',3); 
+title 'Validació Creuada'; 
+xlabel 'record';ylabel 'precissió';
 
 
 % --- Executes on button press in itera_endarrere.
 function itera_endarrere_Callback(hObject, eventdata, handles)
-% hObject    handle to itera_endarrere (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
 % --- Executes on button press in itera_endavant.
 function itera_endavant_Callback(hObject, eventdata, handles)
-% hObject    handle to itera_endavant (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
