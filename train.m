@@ -207,11 +207,8 @@ end
     mitjana_linia_natura = sum(total_linia_natura(:))/6;
     mitjana_linia_ciutat = sum(total_linia_ciutat(:))/6;
 
-    
-    
 
   %Les diferents mitjanes serán els llindars perfectes que delimiten les imatges de ciutat o es imatges de natura
-  
   %Ara ja sabem el llindar perfecte, mitjançant les imatges
   %d'aprenantatge.. Per tant, utilitzarem aquests llindars per classificar
   %les demes imatges.

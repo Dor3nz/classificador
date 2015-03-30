@@ -29,13 +29,10 @@ end
 for q = 1:num
     if((valors_in(q) == 1) && (valors_out(q) == 1))
         positius_certs = positius_certs + 1;
-    
     elseif((valors_in(q) == 0) && (valors_out(q) == 1))
         positius_falsos = positius_falsos + 1;
-        
     elseif((valors_in(q) == 1) && (valors_out(q) == 0))
         negatius_falsos = negatius_falsos + 1;
-        
     elseif((valors_in(q) == 0) && (valors_out(q) == 0))
         negatius_certs = negatius_certs + 1;
     end
